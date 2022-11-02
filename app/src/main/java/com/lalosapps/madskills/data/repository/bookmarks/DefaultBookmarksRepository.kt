@@ -1,4 +1,4 @@
-package com.lalosapps.madskills.data.repository
+package com.lalosapps.madskills.data.repository.bookmarks
 
 import com.lalosapps.madskills.data.local.LocalDataSource
 import kotlinx.coroutines.flow.Flow
