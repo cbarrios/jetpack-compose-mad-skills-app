@@ -11,6 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -82,7 +85,8 @@ fun MovieCard(
             .padding(4.dp)
             .fillMaxWidth()
             .aspectRatio(1f)
-            .clickable { onToggleBookmark() },
+            .clickable { onToggleBookmark() }
+            .testTag("card"),
         elevation = 8.dp,
     ) {
         AsyncImage(
@@ -90,7 +94,7 @@ fun MovieCard(
                 .data(if (isBookmarked) movie.backdrop else movie.poster)
                 .crossfade(true)
                 .build(),
-            contentDescription = "Photo",
+            contentDescription = if (isBookmarked) "backdrop" else "poster",
             contentScale = ContentScale.FillBounds
         )
     }
@@ -106,7 +110,7 @@ fun ErrorScreen() {
 @Composable
 fun LoadingScreen() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(modifier = Modifier.semantics { contentDescription = "progress" })
     }
 }
 
